@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test_reusable_workflow:
+    uses: ./.github/workflows/_test_reusable_workflow.yaml
+
+  test_action:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Reusable test
-        uses: ./.github/workflows/_test_reusable_workflow.yaml
 
       - name: Hello
         uses: ./.github/actions/test_action # ここで呼び出している
