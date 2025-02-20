@@ -1,0 +1,15 @@
+name: Test Action
+
+inputs:
+  name:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: Test step
+      id: test
+      shell: bash
+      run: |
+        echo "Hello, ${{ inputs.name }}! at ${{ env.ENV_NAME }}"
