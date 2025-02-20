@@ -12,6 +12,7 @@ runs:
       id: test
       shell: bash
       env:
-        LOCAL_ENV: "local environment"
+        LOCAL_ENV: ${{ secrets.TEST_SECRET }}
       run: |
         echo "Hello, ${{ inputs.name }}! at ${{ env.GLOBAL_ENV }}"
+        echo "Hello, ${{ inputs.name }}! at $LOCAL_ENV"
