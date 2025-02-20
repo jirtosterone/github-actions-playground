@@ -11,6 +11,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Hello
-        uses: ./.github/actions/test_action
+        uses: ./.github/actions/test_action # ここで呼び出している
+        env:
+          GLOBAL_ENV: "global environment" # 追加
         with:
           name: "World"
