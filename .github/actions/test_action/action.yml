@@ -5,6 +5,9 @@ inputs:
     required: true
     type: string
 
+env:
+  ENV_NAME: test
+
 runs:
   using: composite
   steps:
