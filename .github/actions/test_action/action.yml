@@ -6,7 +6,7 @@ inputs:
     type: string
 
 env:
-  ENV_NAME: test
+  GLOBAL_ENV: "global environment"
 
 runs:
   using: composite
@@ -14,5 +14,8 @@ runs:
     - name: Test step
       id: test
       shell: bash
+      env:
+        LOCAL_ENV: "local environment"
       run: |
-        echo "Hello, ${{ inputs.name }}! at ${{ env.ENV_NAME }}"
+        echo "Hello, ${{ inputs.name }}! at ${{ env.GLOBAL_ENV }}"
+        echo "Hello, ${{ inputs.name }}! at $LOCAL_ENV"
