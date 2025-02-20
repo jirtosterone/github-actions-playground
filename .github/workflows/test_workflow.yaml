@@ -13,6 +13,6 @@ jobs:
       - name: Hello
         uses: ./.github/actions/test_action # ここで呼び出している
         env:
-          GLOBAL_ENV: "global environment" # 追加
+          GLOBAL_ENV: ${{ secrets.TEST_SECRET }}
         with:
           name: "World"
