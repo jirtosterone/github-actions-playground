@@ -1,0 +1,14 @@
+name: Test Reusable Workflow
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test secret
+        id: test
+        shell: bash
+        run: |
+          echo "Hello, secret: ${{ secrets.TEST_SECRET }}"
