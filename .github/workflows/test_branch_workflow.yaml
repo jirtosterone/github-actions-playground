@@ -1,0 +1,79 @@
+name: Test Branch Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      which_branch:
+        required: true
+        type: choice
+        options:
+          - b1
+          - b2
+
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Init
+        shell: bash
+        run: |
+          echo "This is initial job!"
+
+  b1:
+    runs-on: ubuntu-latest
+    needs:
+      - a
+    if: ${{ inputs.which_branch == 'b1' }}
+    outputs:
+      branch_job: ${{ steps.select.outputs.branch_job }}
+    steps:
+      - name: Select
+        id: select
+        shell: bash
+        run: |
+          echo "branch_job=B1" >> $GITHUB_OUTPUT
+
+  b2:
+    runs-on: ubuntu-latest
+    needs:
+      - a
+    if: ${{ inputs.which_branch == 'b2' }}
+    outputs:
+      branch_job: ${{ steps.select.outputs.branch_job }}
+    steps:
+      - name: Select
+        id: select
+        shell: bash
+        run: |
+          echo "branch_job=B2" >> $GITHUB_OUTPUT
+
+  c:
+    runs-on: ubuntu-latest
+    needs:
+      - b1
+      - b2
+    if: ${{ always() }}
+    outputs:
+      branch_job: ${{ steps.set.outputs.executed_branch_job }}
+    steps:
+      - name: Set
+        id: set
+        shell: bash
+        run: |
+          if [ "${{ needs.b1.result }}" = "success" ]; then
+            echo "executed_branch_job=${{ needs.b1.outputs.branch_job }}" >> $GITHUB_OUTPUT
+          elif [ "${{ needs.b2.result }}" = "success" ]; then
+            echo "executed_branch_job=${{ needs.b2.outputs.branch_job }}" >> $GITHUB_OUTPUT
+          else
+            echo "executed_branch_job=none" >> $GITHUB_OUTPUT
+          fi
+
+  d:
+    runs-on: ubuntu-latest
+    needs:
+      - c
+    steps:
+      - name: Show
+        shell: bash
+        run: |
+          echo "Selected branch job is ${{ needs.c.outputs.branch_job }}!"
