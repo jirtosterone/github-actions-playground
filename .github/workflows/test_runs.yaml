@@ -1,0 +1,20 @@
+name: Test Branch Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  steps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pipe
+        shell: bash
+        run: |
+          echo "hoge"
+          echo "fuga"
+
+      - name: Angle
+        shell: bash
+        run: >
+          echo "hoge"
+          echo "fuga"
