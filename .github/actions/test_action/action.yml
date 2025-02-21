@@ -9,7 +9,6 @@ runs:
   using: composite
   steps:
     - name: Test step
-      id: test
       shell: bash
       run: |
         echo "Hello, ${{ inputs.name }}! at ${{ env.GLOBAL_ENV }}"
